@@ -1,0 +1,24 @@
+{
+  "tests": [
+    {
+      "name": "MapBasics.java",
+      "run": "./gradlew test --tests MapBasicsTest --console=plain",
+      "points": 40
+    },
+    {
+      "name": "MapExperts.java",
+      "run": "./gradlew test --tests MapExpertsTest --console=plain",
+      "points": 30
+    },
+    {
+      "name": "PostalCodesMain.java: 19230 -> Onkiniemi",
+      "run": "bash ./.grading/tests/test1.sh",
+      "points": 15
+    },
+    {
+      "name": "PostalCodesMain.java: tammisaari -> 10600...10660",
+      "run": "bash ./.grading/tests/test2.sh",
+      "points": 15
+    }
+  ]
+}
