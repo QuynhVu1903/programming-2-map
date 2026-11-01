@@ -1,5 +1,8 @@
 package part03;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -40,9 +43,41 @@ public class PostalCodesMain {
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input postal code or district (e.g., 00100 or Helsinki): ");
-        String answer = scanner.nextLine(); // answer may be a postal code or a postal district name
+        String answer = scanner.nextLine().trim(); // answer may be a postal code or a postal district name
 
         // TODO: Implement your logic here
+        // Nếu input khớp với Key → tìm district.
+        if (answer.matches("\\d{5}")) {
+            if (postalCodes.containsKey(answer)) {
+                System.out.println("Post office: " + postalCodes.get(answer));
+            } else
+                System.out.println("Postal code not found.");
+        } else {
+            List<String> postals = new ArrayList<>();
+            for (Map.Entry<String, String> entry : postalCodes.entrySet()) {
+                if (entry.getValue().equalsIgnoreCase(answer)) {
+                    postals.add(entry.getKey());
+                }
+            }
+            // kiem tra list co rong khong
+            if (postals.isEmpty()) {
+                System.out.println("Postal codes not found.");
+            } else {
+                String result = "Postal codes: ";
+                Collections.sort(postals);
+                for (int i = 0; i < postals.size(); i++) {
+                    result += postals.get(i);
+                    if (i < postals.size() - 1) {
+                        result += ", ";
+                    }
+                }
+                System.out.println(result);
+            }
+        }
+
+        // Nếu không khớp Key → kiểm tra input có phải định dạng postal code không.
+        // Nếu không phải postal code → tìm district trong Value.
+        // Nếu không tìm thấy → in thông báo phù hợp.
 
         scanner.close();
     }

@@ -1,5 +1,8 @@
 package part04;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * This is an extra class, which is not included in the grading of the
  * assignment. Feel free to complete this class or skip it entirely. If you
@@ -27,6 +30,20 @@ package part04;
  * their corresponding characters.
  */
 public class MorseCode {
+    public Character[] letters = {
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+            'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+            'u', 'v', 'w', 'x', 'y', 'z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+    };
+
+    public String[] codes = {
+            ".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---",
+            "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
+            "..-", "...-", ".--", "-..-", "-.--", "--..",
+            "-----", ".----", "..---", "...--", "....-", ".....",
+            "-....", "--...", "---..", "----."
+    };
 
     /**
      * Translates a string of morse code to text. The morse code is represented as
@@ -40,7 +57,26 @@ public class MorseCode {
      * @return the translated text (in lower case)
      */
     public String morseToText(String morse) {
-        return null;
+        morse = morse.trim();
+        StringBuilder result = new StringBuilder();
+        Map<String, Character> morseMap = new HashMap<>();
+        for (int i = 0; i < letters.length; i++) {
+            morseMap.put(codes[i], letters[i]);
+        }
+        String[] morseWords = morse.split("\\s{3}");
+        for (int i = 0; i < morseWords.length; i++) {
+            String[] morseCharacters = morseWords[i].split(" ");
+            for (int j = 0; j < morseCharacters.length; j++) {
+                if(morseMap.containsKey(morseCharacters[j])){
+                    result.append(morseMap.get(morseCharacters[j]));
+                }
+            }
+            if(i < morseWords.length - 1){
+                result.append(" ");
+            }
+        }
+        String textResult = result.toString();
+        return textResult;
     }
 
     /**
@@ -58,6 +94,32 @@ public class MorseCode {
      * @return the translated morse code as a single string
      */
     public String textToMorse(String text) {
-        return null;
+        text = text.toLowerCase().trim();
+        String[] morse = text.split("\\s+");
+        Map<Character, String> morseMap = new HashMap<>();
+        for (int i = 0; i < letters.length; i++) {
+            morseMap.put(letters[i], codes[i]);
+        }
+        boolean check = true;
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < morse.length; i++) {
+            for (int j = 0; j < morse[i].length(); j++) {
+                if (morseMap.containsKey(morse[i].charAt(j))) {
+                    if (!check) {
+                        result.append(" ");
+                    }
+                    result.append(morseMap.get(morse[i].charAt(j)));
+                    check = false;
+                } else
+                    continue;
+            }
+            if (i < morse.length - 1) {
+                result.append("   ");
+                check = true;
+            }
+
+        }
+        String textResult = result.toString();
+        return textResult;
     }
 }

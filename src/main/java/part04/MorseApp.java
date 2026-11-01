@@ -13,5 +13,12 @@ public class MorseApp {
 
         // TODO: implement this method as you see fit.
         // You can either translate from text to morse code or vice versa, or both.
+        String text = "Morse Code";
+
+        String morse = morseCode.textToMorse(text);
+        System.out.println(morse);
+
+        String translateToWord = morseCode.morseToText(morse);
+        System.out.println(translateToWord);
     }
 }
